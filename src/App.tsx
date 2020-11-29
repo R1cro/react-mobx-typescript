@@ -1,26 +1,22 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import TodoList from "./components/todo/TodoList";
+import {observer} from "mobx-react-lite";
+import {RootStoreProvider} from "./context/RootContext";
+import useStore from "./hooks/store.hook";
+import Counter from "./components/counter/Counter";
 
-function App() {
-  return (
+
+const App: React.FC = observer(() => {
+    const {todoStore, counterStore} = useStore();
+    return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <RootStoreProvider value={{todoStore, counterStore}}>
+        <h1>React + MobX + TypeScript</h1>
+        <TodoList />
+        <Counter />
+      </RootStoreProvider>
     </div>
-  );
-}
+    );
+})
 
 export default App;
